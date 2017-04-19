@@ -12,7 +12,7 @@
 
 NAME	= tboivin.filler
 
-SRC		= srcs/filler.c srcs/get.c srcs/start.c srcs/direction.c srcs/clean.c srcs/recup.c srcs/plus.c
+SRC		= srcs/filler.c srcs/get.c srcs/start.c srcs/direction.c srcs/clean.c srcs/recup.c srcs/plus.c srcs/plus_.c
 
 OBJ		= $(SRC:.c=.o)
 

@@ -24,6 +24,21 @@ t_lt	*create(int y, int x)
 	return (new);
 }
 
+void	add_back(t_lt **f, int y, int x)
+{
+	t_lt *tmp;
+
+	tmp = (*f);
+	if (!(*f))
+	{
+		(*f) = create(y, x);
+		return ;
+	}
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = create(y, x);
+}
+
 int		possible(t_fill *s, int y, int x)
 {
 	int py;
@@ -41,34 +56,37 @@ int		possible(t_fill *s, int y, int x)
 			if (touch > 1)
 				return (0);
 			if (s->map[y + py][x + px] == s->player && s->piece[py][px] == '*')
-			{
 				touch++;
-			}
 			else if (s->map[y + py][x + px] == s->enemy)
 				return (0);
 			px++;
 		}
 		py++;
 	}
-	if (touch == 1)
-		return (1);
-	else
-		return (0);
+	return (touch == 1);
 }
 
-void	add_back(t_lt **f, int y, int x)
+void	begin_(t_lt *f, t_fill *s)
 {
-	t_lt *tmp;
-
-	tmp = (*f);
-	if (!(*f))
+	if (s->size_y < 20)
+		map_0(s, f);
+	else if (s->size_y > 50)
+		map_2(s, f);
+	else if (s->player_y_h <= s->enemy_y_h && s->size_y > 20)
 	{
-		(*f) = create(y, x);
-		return ;
+		if (s->player_x_l > s->enemy_x_l)
+			d_left(s, f);
+		else
+			down_right(s, f);
 	}
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = create(y, x);
+	else if (s->player_y_h > s->enemy_y_h && s->size_y > 20)
+	{
+		if (s->player_x_l < s->enemy_x_l)
+			h_right(s, f);
+		else
+			h_left(s, f);
+	}
+	free_lst(&f);
 }
 
 void	begin(t_lt *f, t_fill *s)
@@ -89,17 +107,12 @@ void	begin(t_lt *f, t_fill *s)
 		y++;
 	}
 	if (f)
-	{
-		if (s->player_y_h < s->enemy_y_h && s->player_y_d != 0)
-		{
-			if (s->size_y < 20)
-				map_0(s, f);
-			else
-				down_right(s, f);
-		}
-		else
-			h_left(s, f);
-	}
+		begin_(f, s);
 	else
+	{
+		free(s);
+		free_lst(&f);
+		suite(0, 0);
 		exit(0);
+	}
 }

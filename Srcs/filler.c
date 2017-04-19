@@ -18,16 +18,10 @@ t_fill	*set_struct(void)
 
 	if (!(s = (t_fill *)malloc(sizeof(t_fill))))
 		return (NULL);
-	s->dot = 0;
 	s->d_line = 0;
-	s->tot = 0;
-	s->nb_piece = 0;
 	s->player = 0;
 	s->enemy = 0;
-	s->map = NULL;
 	s->d_line = 0;
-	s->y = 0;
-	s->x = 0;
 	s->size_y = 0;
 	s->size_x = 0;
 	s->piece_y = 0;
@@ -35,17 +29,38 @@ t_fill	*set_struct(void)
 	return (s);
 }
 
+void	free_lst(t_lt **f)
+{
+	t_lt *tmp;
+
+	while (*f)
+	{
+		tmp = *f;
+		*f = (*f)->next;
+		free(tmp);
+	}
+	free(*f);
+}
+
 int		main(void)
 {
 	char	*line;
+	int		color;
 	t_fill	*s;
 	t_lt	*f;
 
+	color = COLOR;
 	f = NULL;
 	s = set_struct();
 	get_next_line(0, &line);
 	s->player = (ft_strncmp(line, "$$$ exec p1", 11) == 0) ? 'O' : 'X';
 	s->enemy = (s->player == 'O') ? 'X' : 'O';
+	free(line);
+	if (color == 1)
+	{
+		ft_putstr_fd("\e[?25l", 2);
+		ft_putstr_fd("\e[1;1H\e[2J", 2);
+	}
 	while (1)
 	{
 		get_map(s, line);

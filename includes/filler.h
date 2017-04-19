@@ -12,29 +12,21 @@
 
 #ifndef FILLER_H
 # define FILLER_H
-# define color 0
 # include "../libft/includes/libft.h"
-# include <sys/types.h>
-# include <sys/uio.h>
 # include <stdio.h>
+# define COLOR 0
 
 typedef struct		s_fill
 {
 	char			player;
 	char			enemy;
-	char			**map;
-	int				tot;
-	int				dot;
+	char			map[200][200];
 	int				d_line;
-	int				nb_piece;
 	int				player_y_d;
 	int				player_y_h;
 	int				player_x_r;
 	int				player_x_l;
 	int				column;
-	int				y;
-	int				i;
-	int				x;
 	int				enemy_y_h;
 	int				enemy_y_d;
 	int				enemy_x_r;
@@ -53,6 +45,13 @@ typedef struct		s_lt
 	struct s_lt		*next;
 }					t_lt;
 
+void				free_lst(t_lt **f);
+void				get_color2(void);
+void				suite(int y, int x);
+void				map_2(t_fill *s, t_lt *f);
+void				h_left_(t_fill *s, t_lt *f, int y, int x);
+void				down_right_(t_fill *s, t_lt *f, int y, int x);
+void				coord_enemy3(t_fill *s);
 void				d_left(t_fill *s, t_lt *f);
 void				map_0(t_fill *s, t_lt *f);
 void				down_right(t_fill *s, t_lt *f);

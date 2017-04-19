@@ -31,16 +31,14 @@ void	d_right(t_fill *s, t_lt *f)
 	tmp = f;
 	while (tmp)
 	{
-		if (y == tmp->y)
-		{
-			if (x < tmp->x)
-				x = tmp->x;
-		}
+		if (y == tmp->y && x < tmp->x)
+			x = tmp->x;
 		tmp = tmp->next;
 	}
-	// ft_dprintf(2, "column: %d line: %d y: %d x: %d\n", s->column, s->d_line, y, x);
-	// ft_dprintf(2, "D_right y : %d x : %d\n", s->column - y, s->d_line - x);
-	ft_printf("%d %d\n", y, x);
+	ft_putnbr(y);
+	ft_putchar(' ');
+	ft_putnbr(x);
+	ft_putchar('\n');
 }
 
 void	d_left(t_fill *s, t_lt *f)
@@ -61,15 +59,14 @@ void	d_left(t_fill *s, t_lt *f)
 	tmp = f;
 	while (tmp)
 	{
-		if (y == tmp->y)
-		{
-			if (x > tmp->x)
-				x = tmp->x;
-		}
+		if (y == tmp->y && x > tmp->x)
+			x = tmp->x;
 		tmp = tmp->next;
 	}
-	// ft_dprintf(2, "d_left : [%d %d]\n", s->column + y, x + s->d_line);
-	ft_printf("%d %d\n", y, x);
+	ft_putnbr(y);
+	ft_putchar(' ');
+	ft_putnbr(x);
+	ft_putchar('\n');
 }
 
 void	h_right(t_fill *s, t_lt *f)
@@ -90,15 +87,14 @@ void	h_right(t_fill *s, t_lt *f)
 	tmp = f;
 	while (tmp)
 	{
-		if (y == tmp->y)
-		{
-			if (x < tmp->x)
-				x = tmp->x;
-		}
+		if (y == tmp->y && x < tmp->x)
+			x = tmp->x;
 		tmp = tmp->next;
 	}
-	// ft_dprintf(2, "h_right : [%d %d]\n",/* s->column + */y, x/* + s->d_line*/);
-	ft_printf("%d %d\n", y, x);
+	ft_putnbr(y);
+	ft_putchar(' ');
+	ft_putnbr(x);
+	ft_putchar('\n');
 }
 
 void	down_right(t_fill *s, t_lt *f)
@@ -120,21 +116,11 @@ void	down_right(t_fill *s, t_lt *f)
 	tmp = f;
 	while (tmp)
 	{
-		if (y == tmp->y)
-		{
-			if (x < tmp->x)
-				x = tmp->x;
-		}
+		if (y == tmp->y && x < tmp->x)
+			x = tmp->x;
 		tmp = tmp->next;
 	}
-	if (s->player_y_d == s->size_y && (s->player_x_r + 1 == s->size_x
-		|| s->player_x_l == 0))
-		h_right(s, f);
-	else if (s->player_y_h == 0 && (s->player_x_r + 1 == s->size_x
-		|| s->player_x_l == 0))
-		d_left(s, f);
-	else
-		ft_printf("%d %d\n", y, x);
+	down_right_(s, f, y, x);
 }
 
 void	h_left(t_fill *s, t_lt *f)
@@ -157,19 +143,10 @@ void	h_left(t_fill *s, t_lt *f)
 	{
 		if (y == tmp->y && x > tmp->x)
 			x = tmp->x;
-		// else
-		// 	break ;
 		tmp = tmp->next;
 	}
-	if (s->player_y_h == 0 && (s->player_x_l != 0
-		|| s->player_y_d < s->enemy_y_h))
-		d_right(s, f);
-	else if (s->player_y_d == s->size_y && s->player_x_l == 0
-		&& s->player_y_h == 0 && s->player_x_r == s->size_x)
-		d_left(s, f);
-	else if (s->player_y_d == s->size_y && (s->player_x_l == 0
-		|| s->player_x_r == s->size_x))
-		h_right(s, f);
+	if (s->size_y < 20)
+		h_left_(s, f, y, x);
 	else
-		ft_printf("%d %d\n", y - s->column, x - s->column);
+		suite(y, x);
 }

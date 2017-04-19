@@ -23,7 +23,7 @@ void	get_coord_y2(t_fill *s)
 		x = s->size_x;
 		while (x > 0)
 		{
-			if (s->map && s->map[y - 1][x] == s->player)
+			if (s->map[y - 1][x] == s->player)
 			{
 				s->player_y_d = y;
 				return ;
@@ -79,28 +79,6 @@ void	get_coord(t_fill *s)
 		y++;
 	}
 	get_coord_y(s);
-}
-
-void	coord_enemy3(t_fill *s)
-{
-	int x;
-	int y;
-
-	y = s->size_y;
-	while (y > 0)
-	{
-		x = s->size_x;
-		while (x > 0)
-		{
-			if (s->map && s->map[y - 1][x] == s->enemy)
-			{
-				s->enemy_y_d = y;
-				return ;
-			}
-			x--;
-		}
-		y--;
-	}
 }
 
 void	coord_enemy2(t_fill *s)
